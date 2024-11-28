@@ -6,7 +6,7 @@ extern size_t ft_strlen(const char *str);
 extern char* ft_strcpy(char * dest, const char *str);
 extern int ft_strcmp(const char *str, const char* str1);
 extern size_t ft_write(int fd, const void * buf, size_t len);
-extern ssize_t ft_read(int fd, void *buf, size_t count);
+extern size_t ft_read(int fd, void *buf, size_t count);
 extern char *ft_strdup(const char *s);
 
 int main() {
@@ -33,10 +33,10 @@ int main() {
 
 	// ft_read
 	char buffer[128];
-	ssize_t bytes_read;
+    size_t bytes_read;
 	bytes_read = ft_read(0, buffer, sizeof(buffer));
 
-	if (bytes_read == -1) {
+	if ((int)bytes_read == -1) {
         // Error occurred while reading
         ft_write(2, "Error reading from stdin\n", 25);
         return 1;
@@ -45,25 +45,19 @@ int main() {
     // Print the data read
     ft_write(1, "Data read from stdin: ", 22);
     ft_write(1, buffer, bytes_read);
-
-	//ft_strdup
+	
+    //ft_strdup
 	const char *original_string = "Hello, world!";
-    char *duplicate_string;
+    char *duplicate_string = ft_strdup(original_string);
 
     // Call ft_strdup to duplicate the original string
-    duplicate_string = ft_strdup(original_string);
-
-    if (duplicate_string == NULL) {
-        printf("ft_strdup failed to allocate memory.\n");
-        return 1;
+    if (duplicate_string) {
+        printf("Original string: %s\n", original_string);
+        printf("Duplicate string: %s\n", duplicate_string);
+        free(duplicate_string);
+    } else {
+        printf("memory allocation failed\n");
     }
-
-    // Print the original and duplicate strings
-    printf("Original string: %s\n", original_string);
-    printf("Duplicate string: %s\n", duplicate_string);
-
-    // Free the memory allocated by ft_strdup
-    free(duplicate_string);
-
+    
     return 0;
 }

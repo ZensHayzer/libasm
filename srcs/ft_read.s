@@ -1,11 +1,8 @@
 section .text
-	global _ft_read
+	global ft_read
 
-_ft_read:
-	mov rax, 0x2000003
-	mov rdi, rdi
-	mov rsi, rsi
-	mov rdx, rdx
+ft_read:
+	mov rax, 0
 	syscall
 
 	test rax, rax
@@ -14,6 +11,5 @@ _ft_read:
 
 error:
 
-	mov [rax], rax
 	mov rax, -1
 	ret
