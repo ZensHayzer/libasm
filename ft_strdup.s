@@ -1,15 +1,15 @@
 section .text
 	global ft_strdup
 
-extern ft_strlen
 extern malloc
+extern ft_strlen
 extern ft_strcpy
-extern ft_write
+extern __errno_location
 
 ft_strdup:
-	mov rdi, rsi
+	push rdi
 	call ft_strlen
-	add rax, 1
+	inc rax
 
 	mov rdi, rax
 	call malloc
@@ -17,9 +17,18 @@ ft_strdup:
 	jz malloc_error
 
 	mov rdi, rax
-	mov rsi, rsi
+	pop rsi
 	call ft_strcpy
-	
+
+	ret
+
 malloc_error:
+	pop rsi
 	xor rax, rax
+
+	mov rdi, 12
+	call __errno_location
+	mov rdi, [rax]
+	mov dword [rdi], 12
+	
 	ret

@@ -2,8 +2,9 @@ section .text
 	global ft_strcpy
 
 ft_strcpy:
-	push rbp
-	mov rbp, rsp
+	test rsi, rsi
+	jz error
+	push rdi
 
 .loop:
 	mov al, [rsi]
@@ -15,5 +16,10 @@ ft_strcpy:
 	jmp .loop
 
 .done:
-	pop rbp
+	pop rax
+	ret
+
+error:
+	pop rdi
+	xor rax, rax
 	ret

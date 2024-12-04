@@ -1,5 +1,6 @@
 NAME = libasm.a
 
+INC_DIR = includes
 SRCS_DIR = $(shell find srcs -type d)
 OBJS_DIR = objects
 
@@ -17,12 +18,12 @@ SRCS = ft_strlen.s	\
 
 CC = gcc
 NASM = nasm
-CFLAGS = -Wall -Werror -Wextra -lm -lc -no-pie -g3
+CFLAGS = -Wall -Werror -Wextra -lm -lc -no-pie
 NASM_FLAGS = -f elf64
 
 $(OBJS_DIR)/%.o: %.s | $(OBJS_DIR)
 	@echo "Assembling $<"
-	@$(NASM) $(NASM_FLAGS) $< -o $@
+	@$(NASM) $(NASM_FLAGS) -I${INC_DIR} $< -o $@
 
 $(NAME): $(OBJS)
 	@echo "Creating $(NAME)"
@@ -53,4 +54,4 @@ re: fclean all
 
 .PHONY: test
 test: all
-	$(CC) $(CFLAGS) -o test_main main.c $(NAME)
+	$(CC) $(CFLAGS) -I${INC_DIR} -o test_main main.c $(NAME)
