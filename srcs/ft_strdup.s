@@ -12,7 +12,7 @@ ft_strdup:
 	inc rax
 
 	mov rdi, rax
-	call malloc
+	call malloc wrt ..plt
 	test rax, rax
 	jz malloc_error
 
@@ -27,8 +27,8 @@ malloc_error:
 	xor rax, rax
 
 	mov rdi, 12
-	call __errno_location
+	call __errno_location wrt ..plt
 	mov rdi, [rax]
 	mov dword [rdi], 12
-	
+
 	ret

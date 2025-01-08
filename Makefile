@@ -18,7 +18,7 @@ SRCS = ft_strlen.s	\
 
 CC = gcc
 NASM = nasm
-CFLAGS = -Wall -Werror -Wextra -lm -lc -no-pie
+CFLAGS = -Wall -Werror -Wextra -lm -lc
 NASM_FLAGS = -f elf64
 
 $(OBJS_DIR)/%.o: %.s | $(OBJS_DIR)
